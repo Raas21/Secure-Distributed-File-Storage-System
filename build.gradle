@@ -28,6 +28,7 @@ java {
 
 application {
     mainClass = 'com.sdfs.namenode.NameNodeServer'
+    // no application block needed, we will use JavaExec task instead
 }
 
 protobuf {
@@ -49,4 +50,18 @@ sourceSets {
             srcDirs 'build/generated/source/proto/main/java'
         }
     }
+}
+
+task runNameNode(type: JavaExec) {
+    group = "Execution"
+    description = "Run the NameNode Server"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "com.sdfs.namenode.NameNodeServer"
+}
+
+task runDataNode(type: JavaExec) {
+    group = "Execution"
+    description = "Run the DataNode Client"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "com.sdfs.datanode.DataNodeClient"
 }
