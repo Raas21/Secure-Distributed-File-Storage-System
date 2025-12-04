@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.google.protobuf' version '0.9.4' 
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    
+    implementation 'io.netty:netty-all:4.1.100.Final'
+    
+    
+    implementation 'com.google.protobuf:protobuf-java:3.24.0'
+    
+    
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+application {
+    mainClass = 'com.sdfs.namenode.NameNodeServer'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.24.0"
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {}
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
