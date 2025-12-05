@@ -19,7 +19,8 @@ public class MetadataStore {
 
     /**
      * Helper to get or create a lock for a specific path.
-     * This ensures two threads don't try to write to "/home/user/file.txt" at the same time.
+     * This ensures two threads don't try to write to "/home/user/file.txt" at the
+     * same time.
      */
     private ReadWriteLock getLock(String path) {
         return pathLocks.computeIfAbsent(path, k -> new ReentrantReadWriteLock());
@@ -46,13 +47,15 @@ public class MetadataStore {
      * e.g., path = "/users/docs" -> Returns the INodeDirectory for "docs"
      */
     public INodeDirectory getDirectory(String path) {
-        if (path.equals("/")) return root;
+        if (path.equals("/"))
+            return root;
 
         String[] components = path.split("/");
         INodeDirectory current = root;
 
         for (String part : components) {
-            if (part.isEmpty()) continue; // Skip the first empty string from split
+            if (part.isEmpty())
+                continue; // Skip the first empty string from split
 
             INode child = current.getChild(part);
             if (child == null || !child.isDirectory()) {
@@ -89,11 +92,11 @@ public class MetadataStore {
             // 4. Create the new Inode
             INodeFile newFile = new INodeFile(filename, owner, 0);
             parent.addChild(newFile);
-            
+
             System.out.println("[MetadataStore] Created file entry: " + fullPath);
             return true;
         } finally {
-            // 5. Always release the lock!
+            // 5. Always release the lock
             releaseWriteLock(fullPath);
         }
     }
