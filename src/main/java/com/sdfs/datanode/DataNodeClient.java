@@ -1,6 +1,6 @@
 package com.sdfs.datanode;
 
-import com.sdfs.protocol.HeartBeatResponse;
+import com.sdfs.protocol.SDFSResponse;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -30,7 +30,7 @@ public class DataNodeClient {
                         public void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
                             // CAREFUL: Client decodes RESPONSES, not Requests
-                            ch.pipeline().addLast(new ProtobufDecoder(HeartBeatResponse.getDefaultInstance()));
+                            ch.pipeline().addLast(new ProtobufDecoder(SDFSResponse.getDefaultInstance()));
 
                             ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                             ch.pipeline().addLast(new ProtobufEncoder());
