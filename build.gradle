@@ -65,3 +65,11 @@ task runDataNode(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = "com.sdfs.datanode.DataNodeClient"
 }
+
+task runClient(type: JavaExec) {
+    group = "Execution"
+    description = "Run the DFS Interactive Client"
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "com.sdfs.client.DFSClient"
+    standardInput = System.in // Allow typing in the console
+}
